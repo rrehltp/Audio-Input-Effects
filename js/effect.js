@@ -13,13 +13,3 @@ Effect.prototype.addLinearControls = function( params, name, min, max, step, ini
 function EffectControl(type, min, max, initial, values) {
 
 }
-
-
-const startProcessing = document.getElementById('start-processing');
-console.log('::test', {startProcessing});
-// startProcessing && startProcessing.addEventListener('load', () => {
-//     console.log('test:: Page loading finished for the element!');
-//     audioContext.resume();
-//     changeInput();
-//     document.getElementById('autoplay').style='display:none';
-// });

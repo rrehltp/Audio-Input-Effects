@@ -909,3 +909,10 @@ function impulseResponse( duration, decay, reverse ) {
     }
     return impulse;
 }
+
+
+// document.addEventListener('DOMContentLoaded', () => {
+// 	audioContext.resume();
+// 	changeInput();
+// 	document.getElementById('autoplay').style='display:none';
+// })
