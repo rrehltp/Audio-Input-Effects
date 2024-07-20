@@ -16,7 +16,8 @@ function EffectControl(type, min, max, initial, values) {
 
 
 const startProcessing = document.getElementById('start-processing');
-startProcessing.addEventListener('load', () => {
+console.log('::test', {startProcessing});
+startProcessing && startProcessing.addEventListener('load', () => {
     console.log('Page loading finished for the element!');
     audioContext.resume();
     changeInput();
