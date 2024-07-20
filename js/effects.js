@@ -909,12 +909,3 @@ function impulseResponse( duration, decay, reverse ) {
     }
     return impulse;
 }
-
-
-const startProcessing = document.getElementById('start-processing');
-startProcessing.addEventListener('load', () => {
-    console.log('Page loading finished for the element!');
-    audioContext.resume();
-    changeInput();
-    document.getElementById('autoplay').style='display:none';
-});
