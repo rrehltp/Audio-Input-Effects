@@ -71,7 +71,9 @@
 	<div id="autoplay">
 		<button
 			onclick="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';"
-			id = 'start-processing'>
+			id = 'start-processing'
+			onload="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';"
+		>
 			Start Processing
 		</button>
 	</div>
