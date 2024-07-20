@@ -70,8 +70,10 @@
 <body>
 	<div id="autoplay">
 		<button
-			onclick="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';">Start
-			Processing</button>
+			onclick="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';"
+			id = 'start-processing'>
+			Start Processing
+		</button>
 	</div>
 	<div>Input:
 		<select id="audioinput" onchange="changeInput(this.selectedIndex);">
