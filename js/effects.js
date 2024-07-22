@@ -47,11 +47,11 @@ var audioInput = null,
 
 var rafID = null;
 var constraints = 
-{
-  audio: {
-      optional: [{ echoCancellation: false }]
-  }
-};
+    {
+        audio: {
+            optional: [{ echoCancellation: false }]
+        }
+    };
 
 function convertToMono( input ) {
     var splitter = audioContext.createChannelSplitter(2);
@@ -64,13 +64,6 @@ function convertToMono( input ) {
 }
 
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
-window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame;
-
-function cancelAnalyserUpdates() {
-    if (rafID)
-        window.cancelAnimationFrame( rafID );
-    rafID = null;
-}
 
 var lpInputFilter=null;
 
@@ -124,9 +117,7 @@ function gotStream(stream) {
     wetGain.connect(outputMix);
     outputMix.connect( audioContext.destination);
     outputMix.connect(analyser2);
-    crossfade(1.0);
     changeEffect();
-    cancelAnalyserUpdates();
 }
 
 function changeInput(){
@@ -182,15 +173,6 @@ function initAudio() {
 window.addEventListener('load', initAudio );
 
 // window.addEventListener('keydown', keyPress );
-
-function crossfade(value) {
-  // equal-power crossfade
-  var gain1 = Math.cos(value * 0.5*Math.PI);
-  var gain2 = Math.cos((1.0-value) * 0.5*Math.PI);
-
-  dryGain.gain.value = gain1;
-  wetGain.gain.value = gain2;
-}
 
 var lastEffect = -1;
 function changeEffect() {
