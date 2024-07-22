@@ -130,6 +130,12 @@
 			<!--          &nbsp;&nbsp;60Hz filter: <input type="checkbox" checked onchange="toggleFilter()"> -->
 		</div>
 		<div id="controls">
+			<div id="doublerControls">A pitch-shifting effect, using sample-accurate delay ramping. Defaults to one
+				octave down.<br>
+				Pitch-shift: <input id="octpitch" type="range" min="-1" max="1" step="0.05" value="-1"
+					style="height: 20px; width: 200px;"
+					onInput="if (effect.setPitchOffset) effect.setPitchOffset(event.target.value);"><br>
+			</div>
 			<div id="delayControls">A basic digital delay.<br>
 				Delay time: <input id="dtime" type="range" min="0.01" max="3" step="0.01" value="0.15"
 					style="height: 20px; width: 200px"
@@ -148,7 +154,6 @@
 			<div id="telephoneControls">This effect pairs a low-pass and a high-pass filter to "telephonize" a sound -
 				removing
 				the high and low frequencies.
-				<!-- TODO: put LP/HP cutoff controls here -->
 			</div>
 			<div id="gainLFOControls">This effect chops up the sound by using a low-frequency oscillator (LFO) to
 				control the
