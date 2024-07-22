@@ -3,26 +3,8 @@
 
 <head>
 	<title>Live input effects</title>
-	<script src="js/effect.js"></script>
-	<script src="js/waveshaper.js"></script>
 	<script src="js/jungle.js"></script>
 	<script src="js/effects.js"></script>
-	<script src="js/pingpong.js"></script>
-	<script src="js/apollo.js"></script>
-
-	<!-- Visualizer stuff -->
-	<!-- <script src="js/visualizer/events.js"></script> -->
-
-	<!-- WebGL stuff -->
-	<!-- <script src="js/visualizer/base.js"></script> -->
-	<!-- <script src="js/visualizer/cameracontroller.js"></script> -->
-
-	<!-- TODO(kbr): remove this dependency -->
-	<!-- <script src="js/visualizer/matrix4x4.js"></script> -->
-
-	<!-- Visualizer GL library -->
-	<!-- <script src="js/visualizer/visualizer.js"></script> -->
-	<!-- <script src="js/visualizer/shader.js"></script> -->
 
 	<style>
 		body {
@@ -81,25 +63,9 @@
 		<select id="audioinput" onchange="changeInput(this.selectedIndex);">
 			<option>default (selection not supported)</option>
 		</select>
-		<!--
-		<button id="apollo">quindar beep</button>
--->
 	</div>
 
 	<div id="arranger">
-		<!-- <canvas id="view1" width="750" height="200"></canvas><br>
-		<canvas id="view2" width="750" height="200"></canvas>
-		<div>
-			<input type="radio" name="radioSet" value="data"
-				onmousedown="analyserView1.setAnalysisType(ANALYSISTYPE_FREQUENCY); analyserView2.setAnalysisType(ANALYSISTYPE_FREQUENCY);">Frequency
-			<input type="radio" name="radioSet" value="data"
-				onmousedown="analyserView1.setAnalysisType(ANALYSISTYPE_SONOGRAM); analyserView2.setAnalysisType(ANALYSISTYPE_SONOGRAM);">Sonogram
-			<input type="radio" name="radioSet" value="data" checked="checked"
-				onmousedown="analyserView1.setAnalysisType(ANALYSISTYPE_3D_SONOGRAM); analyserView2.setAnalysisType(ANALYSISTYPE_3D_SONOGRAM);">3D
-			Sonogram
-			<input type="radio" name="radioSet" value="data"
-				onmousedown="analyserView1.setAnalysisType(ANALYSISTYPE_WAVEFORM); analyserView2.setAnalysisType(ANALYSISTYPE_WAVEFORM);">Waveform
-		</div> -->
 		<div id="effectMix">
 			Effect: 
 			<select id="effect">
@@ -108,7 +74,6 @@
 			&nbsp;&nbsp;Effect Mix: <input type="range" min="0.0" max="1.0" step="0.01" value="1.0"
 				style="height: 20px; width: 200px;" onInput="crossfade( event.target.value );">
 			&nbsp;&nbsp;Mono input: <input type="checkbox" checked onchange="toggleMono()">
-			<!--          &nbsp;&nbsp;60Hz filter: <input type="checkbox" checked onchange="toggleFilter()"> -->
 		</div>
 		<div id="controls">
 			<div id="doublerControls">A pitch-shifting effect, using sample-accurate delay ramping. Defaults to one
@@ -117,16 +82,8 @@
 					style="height: 20px; width: 200px;"
 					onInput="if (effect.setPitchOffset) effect.setPitchOffset(event.target.value);"><br>
 			</div>
-			
-
 		</div>
-		<!--
-      <button onclick="this.innerText = toggleSample();">play</button>
-  -->
 	</div>
-	<a href="https://github.com/rrehltp/Audio-Input-Effects"
-		style="position: absolute; z-index:2; top: 0; right: 0; border: 0;"><img src="img/forkme.png"
-			alt="Fork me on GitHub"></a>
 </body>
 
 </html>
