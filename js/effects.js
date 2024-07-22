@@ -1,51 +1,12 @@
 var audioContext = new AudioContext;
 var audioInput = null,
-    realAudioInput = null,
     effectInput = null,
     wetGain = null,
     dryGain = null,
     outputMix = null,
-    currentEffectNode = null,
-    reverbBuffer = null,
-    dtime = null,
-    dregen = null,
-    lfo = null,
-    cspeed = null,
-    cdelay = null,
-    cdepth = null,
-    scspeed = null,
-    scldelay = null,
-    scrdelay = null,
-    scldepth = null,
-    scrdepth = null,
-    fldelay = null,
-    flspeed = null,
-    fldepth = null,
-    flfb = null,
-    sflldelay = null,
-    sflrdelay = null,
-    sflspeed = null,
-    sflldepth = null,
-    sflrdepth = null,
-    sfllfb = null,
-    sflrfb = null,
-    rmod = null,
-    mddelay = null,
-    mddepth = null,
-    mdspeed = null,
-    lplfo = null,
-    lplfodepth = null,
-    lplfofilter = null,
-    awFollower = null,
-    awDepth = null,
-    awFilter = null,
-    ngFollower = null,
-    ngGate = null,
-    bitCrusher = null,
-    btcrBits = 16,   // between 1 and 16
-    btcrNormFreq = 1; // between 0.0 and 1.0
+    currentEffectNode = null;
+    
 
-var rafID = null;
 var constraints = 
     {
         audio: {
@@ -73,23 +34,6 @@ function createLPInputFilter() {
     lpInputFilter = audioContext.createBiquadFilter();
     lpInputFilter.frequency.value = 2048;
     return lpInputFilter;
-}
-
-
-function toggleMono() {
-    if (audioInput != realAudioInput) {
-        audioInput.disconnect();
-        realAudioInput.disconnect();
-        audioInput = realAudioInput;
-    } else {
-        realAudioInput.disconnect();
-        audioInput = convertToMono( realAudioInput );
-    }
-
-    createLPInputFilter();
-    lpInputFilter.connect(dryGain);
-    lpInputFilter.connect(analyser1);
-    lpInputFilter.connect(effectInput);
 }
 
 var useFeedbackReduction = true;
