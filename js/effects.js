@@ -6,12 +6,10 @@ var audioInput = null,
     currentEffectNode = null;
     
 
-var constraints = 
-    {
-        audio: {
-            optional: [{ echoCancellation: false }]
-        }
-    };
+var constraints = {
+    audio: true,
+    video: false
+};
 
 function convertToMono( input ) {
     var splitter = audioContext.createChannelSplitter(2);
@@ -60,18 +58,6 @@ function gotStream(stream) {
     changeEffect();
 }
 
-function changeInput(){
-  if (!!window.stream) {
-    window.stream.stop();
-  }
-  constraints.audio.optional.push({sourceId: audioSource});
-
-  navigator.getUserMedia(constraints, gotStream, function(e) {
-            alert('Error getting audio');
-            console.log(e);
-        });
-}
-
 function gotSources(sourceInfos) {
     for (var i = 0; i != sourceInfos.length; ++i) {
         var sourceInfo = sourceInfos[i];
@@ -89,10 +75,13 @@ function initAudio() {
     analyser2.fftSize = 1024;
 
 
-    if (!navigator.getUserMedia)
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
         return(alert("Error: getUserMedia not supported!"));
 
-    navigator.getUserMedia(constraints, gotStream, function(e) {
+    navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            gotStream(stream);
+        }).catch(error => {
             alert('Error getting audio');
             console.log(e);
         });
