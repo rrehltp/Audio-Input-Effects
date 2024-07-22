@@ -301,6 +301,9 @@ function changeEffect() {
     lastEffect = effect;
     effectControls.children[effect].classList.add("display");
 
+    currentEffectNode = createPitchShifter();
+
+    /*
     switch (effect) {
         case 0: // Delay
             currentEffectNode = createDelay();
@@ -385,6 +388,7 @@ function changeEffect() {
         default:
             break;
     }
+    */
     audioInput.connect( currentEffectNode );
 }
 
