@@ -214,31 +214,31 @@ function initAudio() {
 }
 
 
-function keyPress(ev) {
-    var oldEffect = document.getElementById("effect").selectedIndex;
-    var newEffect = oldEffect;
-    switch (ev.keyCode) {
-      case 50: // 'r'
-        newEffect = 1;
-        break;
-      case 49: // 'c'
-        newEffect = 8;
-        break;
-      case 51: // 'p'
-        newEffect = 10;
-        break;
-      default:
-        console.log(ev.keyCode);
-    }
-    if (newEffect != oldEffect) {
-        document.getElementById("effect").selectedIndex = newEffect;
-        changeEffect();
-    }
-}
+// function keyPress(ev) {
+//     var oldEffect = document.getElementById("effect").selectedIndex;
+//     var newEffect = oldEffect;
+//     switch (ev.keyCode) {
+//       case 50: // 'r'
+//         newEffect = 1;
+//         break;
+//       case 49: // 'c'
+//         newEffect = 8;
+//         break;
+//       case 51: // 'p'
+//         newEffect = 10;
+//         break;
+//       default:
+//         console.log(ev.keyCode);
+//     }
+//     if (newEffect != oldEffect) {
+//         document.getElementById("effect").selectedIndex = newEffect;
+//         changeEffect();
+//     }
+// }
 
 window.addEventListener('load', initAudio );
 
-window.addEventListener('keydown', keyPress );
+// window.addEventListener('keydown', keyPress );
 
 function crossfade(value) {
   // equal-power crossfade
