@@ -103,17 +103,8 @@ var useFeedbackReduction = true;
 
 function gotStream(stream) {
     // Create an AudioNode from the stream.
-//    realAudioInput = audioContext.createMediaStreamSource(stream);
     var input = audioContext.createMediaStreamSource(stream);
 
-/*
-    realAudioInput = audioContext.createBiquadFilter();
-    realAudioInput.frequency.value = 60.0;
-    realAudioInput.type = realAudioInput.NOTCH;
-    realAudioInput.Q = 10.0;
-
-    input.connect( realAudioInput );
-*/
     audioInput = convertToMono( input );
 
     if (useFeedbackReduction) {
@@ -202,45 +193,7 @@ function crossfade(value) {
 }
 
 var lastEffect = -1;
-
 function changeEffect() {
-    lfo = null;
-    dtime = null;
-    dregen = null;
-    cspeed = null;
-    cdelay = null;
-    cdepth = null;
-    rmod = null;
-    fldelay = null;
-    flspeed = null;
-    fldepth = null;
-    flfb = null;
-    scspeed = null;
-    scldelay = null;
-    scrdelay = null;
-    scldepth = null;
-    scrdepth = null;
-    sflldelay = null;
-    sflrdelay = null;
-    sflspeed = null;
-    sflldepth = null;
-    sflrdepth = null;
-    sfllfb = null;
-    sflrfb = null;
-    rmod = null;
-    mddelay = null;
-    mddepth = null;
-    mdspeed = null;
-    lplfo = null;
-    lplfodepth = null;
-    lplfofilter = null;
-    awFollower = null;
-    awDepth = null;
-    awFilter = null;
-    ngFollower = null;
-    ngGate = null;
-    bitCrusher = null;
-
     if (currentEffectNode) 
         currentEffectNode.disconnect();
     if (effectInput)
@@ -258,41 +211,8 @@ function changeEffect() {
     audioInput.connect( currentEffectNode );
 }
 
-
-
-
-function createTelephonizer() {
-    // I double up the filters to get a 4th-order filter = faster fall-off
-    var lpf1 = audioContext.createBiquadFilter();
-    lpf1.type = "lowpass";
-    lpf1.frequency.value = 2000.0;
-    var lpf2 = audioContext.createBiquadFilter();
-    lpf2.type = "lowpass";
-    lpf2.frequency.value = 2000.0;
-    var hpf1 = audioContext.createBiquadFilter();
-    hpf1.type = "highpass";
-    hpf1.frequency.value = 500.0;
-    var hpf2 = audioContext.createBiquadFilter();
-    hpf2.type = "highpass";
-    hpf2.frequency.value = 500.0;
-    lpf1.connect( lpf2 );
-    lpf2.connect( hpf1 );
-    hpf1.connect( hpf2 );
-    hpf2.connect( wetGain );
-    currentEffectNode = lpf1;
-    return( lpf1 );
-}
-
 function createPitchShifter() {
     effect = new Jungle( audioContext );
     effect.output.connect( wetGain );
     return effect.input;
 }
-
-
-
-// document.addEventListener('DOMContentLoaded', () => {
-// 	audioContext.resume();
-// 	changeInput();
-// 	document.getElementById('autoplay').style='display:none';
-// })
