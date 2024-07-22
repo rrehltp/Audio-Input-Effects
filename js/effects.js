@@ -2,7 +2,6 @@ var audioContext = new AudioContext;
 var audioInput = null,
     effectInput = null,
     wetGain = null,
-    dryGain = null,
     outputMix = null,
     currentEffectNode = null;
     
@@ -51,13 +50,10 @@ function gotStream(stream) {
     }
     // create mix gain nodes
     outputMix = audioContext.createGain();
-    dryGain = audioContext.createGain();
     wetGain = audioContext.createGain();
     effectInput = audioContext.createGain();
-    audioInput.connect(dryGain);
     audioInput.connect(analyser1);
     audioInput.connect(effectInput);
-    dryGain.connect(outputMix);
     wetGain.connect(outputMix);
     outputMix.connect( audioContext.destination);
     outputMix.connect(analyser2);
@@ -68,8 +64,6 @@ function changeInput(){
   if (!!window.stream) {
     window.stream.stop();
   }
-  var audioSelect = document.getElementById("audioinput");
-  var audioSource = audioSelect.value;
   constraints.audio.optional.push({sourceId: audioSource});
 
   navigator.getUserMedia(constraints, gotStream, function(e) {
@@ -79,20 +73,13 @@ function changeInput(){
 }
 
 function gotSources(sourceInfos) {
-    var audioSelect = document.getElementById("audioinput");
-    while (audioSelect.firstChild)
-        audioSelect.removeChild(audioSelect.firstChild);
-
     for (var i = 0; i != sourceInfos.length; ++i) {
         var sourceInfo = sourceInfos[i];
         if (sourceInfo.kind === 'audioinput') {
             var option = document.createElement("option");
             option.value = sourceInfo.id;
-            option.text = sourceInfo.label || 'input ' + (audioSelect.length + 1);
-            audioSelect.appendChild(option);
         }
     }
-    audioSelect.onchange = changeInput;
 }
 
 function initAudio() {
@@ -111,7 +98,6 @@ function initAudio() {
         });
 
     navigator.mediaDevices.enumerateDevices().then(gotSources);
-    document.getElementById("effect").onchange=changeEffect;
 }
 
 window.addEventListener('load', initAudio );
@@ -124,13 +110,6 @@ function changeEffect() {
         currentEffectNode.disconnect();
     if (effectInput)
         effectInput.disconnect();
-
-    var effect = document.getElementById("effect").selectedIndex;
-    var effectControls = document.getElementById("controls");
-    if (lastEffect > -1)
-        effectControls.children[lastEffect].classList.remove("display");
-    lastEffect = effect;
-    effectControls.children[effect].classList.add("display");
 
     currentEffectNode = createPitchShifter();
 

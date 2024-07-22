@@ -18,11 +18,9 @@
 		}
 
 		div#controls div {
-			display: none;
 			border: 1px solid darkgray;
 			border-radius: 5px;
 			padding: 10px;
-			width: 728px;
 		}
 
 		div#controls div.display {
@@ -50,7 +48,7 @@
 </head>
 
 <body>
-	<div id="autoplay">
+	<!-- <div id="autoplay">
 		<button
 			onclick="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';"
 			id = 'start-processing'
@@ -63,18 +61,17 @@
 		<select id="audioinput" onchange="changeInput(this.selectedIndex);">
 			<option>default (selection not supported)</option>
 		</select>
-	</div>
+	</div> -->
 
 	<div id="arranger">
-		<div id="effectMix">
+		<div id="effectMix" style="display: none;">
 			Effect: 
 			<select id="effect">
 				<option>Pitch Shifter </option>
 			</select>
 		</div>
 		<div id="controls">
-			<div id="doublerControls">A pitch-shifting effect, using sample-accurate delay ramping. Defaults to one
-				octave down.<br>
+			<div id="doublerControls">A pitch-shifting effect, defaults to one octave down.<br>
 				Pitch-shift: <input id="octpitch" type="range" min="-1" max="1" step="0.05" value="-1"
 					style="height: 20px; width: 200px;"
 					onInput="if (effect.setPitchOffset) effect.setPitchOffset(event.target.value);"><br>
