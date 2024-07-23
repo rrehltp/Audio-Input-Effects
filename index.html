@@ -36,8 +36,13 @@
 		}
 
 		#arranger {
-			width: 750px;
+			width: 50%;
+			min-width: 320px;
 			margin: 25px auto
+		}
+
+		#video-player {
+			width: 100%;
 		}
 
 		#autoplay {
@@ -48,22 +53,9 @@
 </head>
 
 <body>
-	<!-- <div id="autoplay">
-		<button
-			onclick="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';"
-			id = 'start-processing'
-			onload="audioContext.resume(); changeInput(); document.getElementById('autoplay').style='display:none';"
-		>
-			Start Processing
-		</button>
-	</div>
-	<div>Input:
-		<select id="audioinput" onchange="changeInput(this.selectedIndex);">
-			<option>default (selection not supported)</option>
-		</select>
-	</div> -->
-
+	
 	<div id="arranger">
+		<video id="video-player" src="./small.mp4" autoplay loop controls></video>
 		<div id="effectMix" style="display: none;">
 			Effect: 
 			<select id="effect">
