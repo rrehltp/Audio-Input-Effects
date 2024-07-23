@@ -1,4 +1,4 @@
-var audioContext = new AudioContext;
+var audioContext = new (window.AudioContext || window.webkitAudioContext)();
 var audioInput = null,
     effectInput = null,
     wetGain = null,
@@ -37,7 +37,7 @@ var useFeedbackReduction = true;
 
 function gotStream(stream) {
     // Create an AudioNode from the stream.
-    var input = audioContext.createMediaStreamSource(stream);
+    var input = audioContext.createMediaElementSource(stream);
 
     audioInput = convertToMono( input );
 
@@ -58,47 +58,35 @@ function gotStream(stream) {
     changeEffect();
 }
 
-function gotSources(sourceInfos) {
-    for (var i = 0; i != sourceInfos.length; ++i) {
-        var sourceInfo = sourceInfos[i];
-        if (sourceInfo.kind === 'audioinput') {
-            var option = document.createElement("option");
-            option.value = sourceInfo.id;
-        }
-    }
-}
+// function gotSources(sourceInfos) {
+//     for (var i = 0; i != sourceInfos.length; ++i) {
+//         var sourceInfo = sourceInfos[i];
+//         if (sourceInfo.kind === 'audioinput') {
+//             var option = document.createElement("option");
+//             option.value = sourceInfo.id;
+//         }
+//     }
+// }
 
 function initAudio() {
     analyser1 = audioContext.createAnalyser();
-    analyser1.fftSize = 1024;
+    analyser1.fftSize = 2048;
     analyser2 = audioContext.createAnalyser();
-    analyser2.fftSize = 1024;
+    analyser2.fftSize = 2048;
 
-
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
-        return(alert("Error: getUserMedia not supported!"));
-
-    navigator.mediaDevices.getUserMedia(constraints)
-        .then(stream => {
-            gotStream(stream);
-        }).catch(error => {
-            alert('Error getting audio');
-            console.log(e);
-        });
-
-    navigator.mediaDevices.enumerateDevices().then(gotSources);
+    const videoElement = document.getElementById('video-player');
+    gotStream(videoElement);
 }
 
 window.addEventListener('load', initAudio );
 
 // window.addEventListener('keydown', keyPress );
 
-var lastEffect = -1;
 function changeEffect() {
-    if (currentEffectNode) 
-        currentEffectNode.disconnect();
-    if (effectInput)
-        effectInput.disconnect();
+    // if (currentEffectNode) 
+    //     currentEffectNode.disconnect();
+    // if (effectInput)
+    //     effectInput.disconnect();
 
     currentEffectNode = createPitchShifter();
 
