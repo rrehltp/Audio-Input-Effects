@@ -11,19 +11,19 @@ var constraints = {
     video: false
 };
 
-function convertToMono( input ) {
+function convertToMono(input) {
     var splitter = audioContext.createChannelSplitter(2);
     var merger = audioContext.createChannelMerger(2);
 
-    input.connect( splitter );
-    splitter.connect( merger, 0, 0 );
-    splitter.connect( merger, 0, 1 );
+    input.connect(splitter);
+    splitter.connect(merger, 0, 0);
+    splitter.connect(merger, 0, 1);
     return merger;
 }
 
 window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
 
-var lpInputFilter=null;
+var lpInputFilter = null;
 
 // this is ONLY because we have massive feedback without filtering out
 // the top end in live speaker scenarios.
@@ -39,12 +39,12 @@ function gotStream(stream) {
     // Create an AudioNode from the stream.
     var input = audioContext.createMediaElementSource(stream);
 
-    audioInput = convertToMono( input );
+    audioInput = convertToMono(input);
 
     if (useFeedbackReduction) {
-        audioInput.connect( createLPInputFilter() );
+        audioInput.connect(createLPInputFilter());
         audioInput = lpInputFilter;
-        
+
     }
     // create mix gain nodes
     outputMix = audioContext.createGain();
@@ -53,7 +53,7 @@ function gotStream(stream) {
     audioInput.connect(analyser1);
     audioInput.connect(effectInput);
     wetGain.connect(outputMix);
-    outputMix.connect( audioContext.destination);
+    outputMix.connect(audioContext.destination);
     outputMix.connect(analyser2);
     changeEffect();
 }
@@ -75,14 +75,24 @@ function initAudio() {
     analyser2.fftSize = 2048;
 
     const videoElement = document.getElementById('video-player');
-    
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
     gotStream(videoElement);
-    videoElement.addEventListener('canplaythrough', () => {
-        videoElement.play();
-    });
+
+    console.log('videoElement', { videoElement });
+    // Check if the video element can play automatically muted
+    const promise = videoElement.play();
+
+    if (promise !== undefined) {
+        promise.then(() => {
+            console.log('Autoplay started successfully.');
+        }).catch(error => {
+            console.log('Autoplay was prevented:', error);
+        });
+    }
 }
 
-window.addEventListener('load', initAudio );
+window.addEventListener('DOMContentLoaded', initAudio);
 // window.addEventListener('keydown', keyPress );
 
 function changeEffect() {
@@ -93,11 +103,11 @@ function changeEffect() {
 
     currentEffectNode = createPitchShifter();
 
-    audioInput.connect( currentEffectNode );
+    audioInput.connect(currentEffectNode);
 }
 
 function createPitchShifter() {
-    effect = new Jungle( audioContext );
-    effect.output.connect( wetGain );
+    effect = new Jungle(audioContext);
+    effect.output.connect(wetGain);
     return effect.input;
 }
