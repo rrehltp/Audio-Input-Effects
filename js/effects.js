@@ -75,11 +75,14 @@ function initAudio() {
     analyser2.fftSize = 2048;
 
     const videoElement = document.getElementById('video-player');
+    
     gotStream(videoElement);
+    videoElement.addEventListener('canplaythrough', () => {
+        videoElement.play();
+    });
 }
 
 window.addEventListener('load', initAudio );
-
 // window.addEventListener('keydown', keyPress );
 
 function changeEffect() {
