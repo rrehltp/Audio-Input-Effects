@@ -75,7 +75,6 @@ function initAudio() {
     analyser2.fftSize = 2048;
 
     const videoElement = document.getElementById('video-player');
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
     gotStream(videoElement);
 
@@ -87,7 +86,7 @@ function initAudio() {
         promise.then(() => {
             console.log('Autoplay started successfully.');
         }).catch(error => {
-            console.log('Autoplay was prevented:', error);
+            console.error('Autoplay was prevented:', error);
         });
     }
 }
