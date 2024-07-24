@@ -68,6 +68,11 @@ function gotStream(stream) {
 //     }
 // }
 
+function setEventListener() {
+    const videoElement = document.getElementById('video-player');
+    videoElement.addEventListener('canplaythrough', initAudio)
+}
+
 function initAudio() {
     analyser1 = audioContext.createAnalyser();
     analyser1.fftSize = 2048;
@@ -91,7 +96,7 @@ function initAudio() {
     }
 }
 
-window.addEventListener('DOMContentLoaded', initAudio);
+window.addEventListener('DOMContentLoaded', setEventListener);
 // window.addEventListener('keydown', keyPress );
 
 function changeEffect() {
