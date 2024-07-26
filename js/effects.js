@@ -1,19 +1,19 @@
-var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-var audioInput = null,
+let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+let audioInput = null,
+    audioSource = null,
     effectInput = null,
     wetGain = null,
     outputMix = null,
-    currentEffectNode = null;
-    
+    currentEffectNode = null;    
 
-var constraints = {
+let constraints = {
     audio: true,
     video: false
 };
 
 function convertToMono(input) {
-    var splitter = audioContext.createChannelSplitter(2);
-    var merger = audioContext.createChannelMerger(2);
+    const splitter = audioContext.createChannelSplitter(2);
+    const merger = audioContext.createChannelMerger(2);
 
     input.connect(splitter);
     splitter.connect(merger, 0, 0);
@@ -37,9 +37,9 @@ var useFeedbackReduction = true;
 
 function gotStream(stream) {
     // Create an AudioNode from the stream.
-    const input = audioContext.createMediaElementSource(stream);
+    audioSource = audioContext.createMediaElementSource(stream);
 
-    audioInput = convertToMono(input);
+    audioInput = convertToMono(audioSource);
 
     if (useFeedbackReduction) {
         audioInput.connect(createLPInputFilter());
@@ -55,6 +55,9 @@ function gotStream(stream) {
     wetGain.connect(outputMix);
     outputMix.connect(audioContext.destination);
     outputMix.connect(analyser2);
+
+    currentEffectNode = createPitchShifter();
+
     addEffect();
 }
 
@@ -92,16 +95,6 @@ function initAudio() {
 
     gotStream(videoElement);
 
-    // Check if the video element can play automatically muted
-    // const promise = videoElement.play();
-
-    // if (promise !== undefined) {
-    //     promise.then(() => {
-    //         console.log('Autoplay started successfully.');
-    //     }).catch(error => {
-    //         console.error('Autoplay was prevented:', error);
-    //     });
-    // }
 }
 
 window.addEventListener('DOMContentLoaded', setEventListener);
@@ -109,8 +102,7 @@ window.addEventListener('DOMContentLoaded', setEventListener);
 function addEffect() {
     if(audioContext)
         audioContext.resume();
-    currentEffectNode = createPitchShifter();
-
+    
     audioInput.connect(currentEffectNode);
 }
 function removeEffect() {
