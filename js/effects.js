@@ -85,7 +85,6 @@ function initAudio() {
 
     gotStream(videoElement);
 
-    console.log('videoElement', { videoElement });
     // Check if the video element can play automatically muted
     // const promise = videoElement.play();
 
@@ -101,13 +100,15 @@ function initAudio() {
 window.addEventListener('DOMContentLoaded', setEventListener);
 // window.addEventListener('keydown', keyPress );
 function addEffect() {
-
-
+    if(audioContext)
+        audioContext.resume();
     currentEffectNode = createPitchShifter();
 
     audioInput.connect(currentEffectNode);
 }
 function removeEffect() {
+    if(audioContext)
+        audioContext.suspend();
     currentEffectNode.disconnect();
 }
 
