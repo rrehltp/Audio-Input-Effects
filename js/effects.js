@@ -73,6 +73,13 @@ function setEventListener() {
     videoElement.addEventListener('canplaythrough', initAudio);
     videoElement.addEventListener('play', addEffect);
     videoElement.addEventListener('stop', removeEffect);
+
+    document.addEventListener('visibilitychange', () => {
+        console.log(`visibilityState: ${document.visibilityState}`);
+        if (document.visibilityState === 'visible' && audioContext) {
+            audioContext.resume();
+        }
+    });
 }
 
 function initAudio() {
